@@ -1,0 +1,18 @@
+{
+    "files.autoSave": "onFocusChange",
+    "code-runner.executorMap":{
+        // "javascript": "node",
+        // "php": "C:\\php\\php.exe",
+        // "python": "python",
+        // "perl": "perl",
+        // "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
+        // "go": "go run",
+        // "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
+        "java": "cd $dir ; javac -d. -encoding utf-8 $fileName ; java duoxiancheng.suo.$fileNameWithoutExt",//这里别把包名写错了  
+        //那里加上包名就ok 他会自动转到源文件所在的文件夹
+        // "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
+    },
+    // "java.home": "C:\\Program Files\\Java\\jdk-12.0.1\\",
+    "java.errors.incompleteClasspath.severity": "error",
+    // "terminal.integrated.shell.windows": "powershell.exe",  //1.当显示不是有效语句分割符的解决办法之一 2.另外一个是改成";"
+}
