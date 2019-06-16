@@ -10,5 +10,6 @@ package aaaa;//eclipse 当你没有制定文件夹的时候 也会认为你在�
 public class aaa{
     public static void main(String[] args) {
         System.out.println("woshi aaa");
+        System.out.println("woshi aaa");
     }
 }
