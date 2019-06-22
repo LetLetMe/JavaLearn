@@ -8,7 +8,7 @@
         // "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
         // "go": "go run",
         // "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
-        "java": "cd $dir ; javac -d. -encoding utf-8 $fileName ; java duoxiancheng.suo.$fileNameWithoutExt",//这里别把包名写错了  
+        "java": "cd $dir ; javac -d. -encoding utf-8 $fileName ; java duoxiancheng.xianchengtongxun.$fileNameWithoutExt",//这里别把包名写错了  
         //那里加上包名就ok 他会自动转到源文件所在的文件夹
         // "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     },

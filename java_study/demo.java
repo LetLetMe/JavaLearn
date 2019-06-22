@@ -1,128 +1,90 @@
-class Lipstick {//口红类
- 
-}
-class Mirror {//镜子类
- 
-}
-class Makeup extends Thread {//化妆类继承了Thread类
-    int flag;
-    String girl;
-    static Lipstick lipstick = new Lipstick();
-    static Mirror mirror = new Mirror();
- 
-    @Override
-    public void run() {
-        // TODO Auto-generated method stub
-        doMakeup();
-    }
- 
-    void doMakeup() {
-        if (flag == 0) {
-            synchronized (lipstick) {
-                System.out.println(girl + "拿着口红！");
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
- 
-            }
-            synchronized (mirror) {
-                System.out.println(girl + "拿着镜子！");
-            }
-        } else {
-            synchronized (mirror) {
-                System.out.println(girl + "拿着镜子！");
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            synchronized (lipstick) {
-                System.out.println(girl + "拿着口红！");
-            }
-        }
-    }
-}
- 
-public class TestDeadLock {
+public class TestProduce {
     public static void main(String[] args) {
-        Makeup m1 = new Makeup();// 大丫的化妆线程；
-        m1.girl = "大丫";
-        m1.flag = 0;
-        Makeup m2 = new Makeup();// 小丫的化妆线程；
-        m2.girl = "小丫";
-        m2.flag = 1;
-        m1.start();
-        m2.start();
+        SyncStack sStack = new SyncStack();// 定义缓冲区对象；
+        Shengchan sc = new Shengchan(sStack);// 定义生产线程；
+        Xiaofei xf = new Xiaofei(sStack);// 定义消费线程；
+        sc.start();
+        xf.start();
     }
 }
-
-
-
-
-
-
-
-public class TestSync {
-    public static void main(String[] args) {
-        Account a1 = new Account(100, "高");
-        Drawing draw1 = new Drawing(80, a1);
-        Drawing draw2 = new Drawing(80, a1);
-        draw1.start(); // 你取钱
-        draw2.start(); // 你老婆取钱
+ 
+class Mantou {// 馒头
+    int id;
+ 
+    Mantou(int id) {
+        this.id = id;
     }
 }
-/*
- * 简单表示银行账户
- */
-class Account {
-    int money;
-    String aname;
-    public Account(int money, String aname) {
-        super();
-        this.money = money;
-        this.aname = aname;
-    }
-}
-/**
- * 模拟提款操作
- * 
- * @author Administrator
- *
- */
-class Drawing extends Thread {
-    int drawingNum; // 取多少钱
-    Account account; // 要取钱的账户
-    int expenseTotal; // 总共取的钱数
  
-    public Drawing(int drawingNum, Account account) {
-        super();
-        this.drawingNum = drawingNum;
-        this.account = account;
-    }
+class SyncStack {// 缓冲区(相当于：馒头筐)
+    int index = 0;
+    Mantou[] ms = new Mantou[10];
  
-    @Override
-    public void run() {
-        draw();
-    }
- 
-    void draw() {
-        synchronized (account) {
-            if (account.money - drawingNum < 0) {
-                System.out.println(this.getName() + "取款，余额不足！");
-                return;
-            }
+    public synchronized void push(Mantou m) {
+        while (index == ms.length) {//说明馒头筐满了
             try {
-                Thread.sleep(1000); // 判断完后阻塞。其他线程开始运行。
+               //wait后，线程会将持有的锁释放，进入阻塞状态；
+               //这样其它需要锁的线程就可以获得锁；
+                this.wait();
+                //这里的含义是执行此方法的线程暂停，进入阻塞状态，
+                //等消费者消费了馒头后再生产。
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            account.money -= drawingNum;
-            expenseTotal += drawingNum;
         }
-        System.out.println(this.getName() + "--账户余额：" + account.money);
-        System.out.println(this.getName() + "--总共取了：" + expenseTotal);
+        // 唤醒在当前对象等待池中等待的第一个线程。
+        //notifyAll叫醒所有在当前对象等待池中等待的所有线程。
+        this.notify();
+        // 如果不唤醒的话。以后这两个线程都会进入等待线程，没有人唤醒。
+        ms[index] = m;
+        index++;
+    }
+ 
+    public synchronized Mantou pop() {
+        while (index == 0) {//如果馒头筐是空的；
+            try {
+                //如果馒头筐是空的，就暂停此消费线程（因为没什么可消费的嘛）。
+                this.wait();                //等生产线程生产完再来消费；
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        this.notify();
+        index--;
+        return ms[index];
+    }
+}
+ 
+class Shengchan extends Thread {// 生产者线程
+    SyncStack ss = null;
+ 
+    public Shengchan(SyncStack ss) {
+        this.ss = ss;
+    }
+ 
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            System.out.println("生产馒头：" + i);
+            Mantou m = new Mantou(i);
+            ss.push(m);
+        }
+    }
+}
+ 
+class Xiaofei extends Thread {// 消费者线程；
+    SyncStack ss = null;
+ 
+    public Xiaofei(SyncStack ss) {
+        this.ss = ss;
+    }
+ 
+    @Override
+    public void run() {
+        for (int i = 0; i < 10; i++) {
+            Mantou m = ss.pop();
+            System.out.println("消费馒头：" + i);
+ 
+        }
     }
 }

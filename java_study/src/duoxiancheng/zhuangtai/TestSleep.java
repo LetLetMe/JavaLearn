@@ -17,7 +17,7 @@ class ts implements Runnable {
         // 方法内定义的东西{内部类 常量}都是限于本方法？
         for (a = 0; a <= 20; a++) {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(1000);//占有锁的时候才会影响别的 否则只是自己阻塞
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
