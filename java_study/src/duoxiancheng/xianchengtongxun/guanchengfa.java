@@ -80,3 +80,4 @@ class chanping{
         this.id=id;
     }
 }
+
