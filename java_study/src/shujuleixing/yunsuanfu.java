@@ -22,5 +22,19 @@ public class yunsuanfu {
         // System.out.print(3.0/2,0); print默认参数是int
         double aa=3.0/2.0;//不用加括号
         System.out.println(aa);//当这样显式的指定类型就是可以的了
+        new yunsuanfu().F(2, "asdsad");
+
+        // this.F(1,"AD"); 静态方法中不能用非静态的东西 但是一般方法中可以
+
+        // new yunsuanfu().F("asdsasd", a); java传参必须按顺序
+        // new yunsuanfu().F(s="asdsasd",a=a);  Java传参不能用参数名指定 从而变更参数
+        
+
+        
+    }
+    public void F(int a,String s){
+        System.out.println(a);
+        System.out.println(s);
     }
 }
+
