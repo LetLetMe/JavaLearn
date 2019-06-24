@@ -29,6 +29,10 @@ public class yunsuanfu {
         // new yunsuanfu().F("asdsasd", a); java传参必须按顺序
         // new yunsuanfu().F(s="asdsasd",a=a);  Java传参不能用参数名指定 从而变更参数
         
+        String a=1>0?"大于":"小于"；
+        int aaa=1>0?(1==0?"a":"b"):"b"// 条件三目运算符可以嵌套
+
+        
 
         
     }

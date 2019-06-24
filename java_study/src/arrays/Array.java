@@ -17,6 +17,9 @@ public class Array{
         }
     }
 }
+/**
+ * 随便一个类 用来生成相应的数组
+ */
 class Person{
     public Person(int age){
         this.age=age;//this的另一个作用 跨越作用域
