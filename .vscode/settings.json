@@ -8,12 +8,18 @@
         // "ruby": "C:\\Ruby23-x64\\bin\\ruby.exe",
         // "go": "go run",
         // "html": "\"C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe\"",
-        "java": "cd $dir ; javac -d. -encoding utf-8 $fileName ; java shujuleixing.$fileNameWithoutExt  ",//这里别把包名写错了  
-        // "java": "cd $dir ; javac -d. -encoding utf-8 $fileName ; java shujuleixing.$fileNameWithoutExt ; javadoc -d.Document.$fileNameWithoutExt -encoding utf-8 $fileName ",//这个是打文档用的 
+        
+        //git bash写法
+        "java": "cd $dirWithoutTrailingSlash ; javac -d . -encoding utf-8 $fileName ; java packclass.$fileNameWithoutExt  ",//这里别把包名写错了  
+        // 这里注意连接命令的符号是啥
+        // windows写法
+        // "java": "cd $dir & javac -d . -encoding utf-8 $fileName & java packclass.$fileNameWithoutExt",//这里别把包名写错了  
+        // "java": "cd $dir && javac -d. -encoding utf-8 $fileName && java .$fileNameWithoutExt && javadoc -d.Document.$fileNameWithoutExt -encoding utf-8 $fileName ",//这个是打文档用的 
         //那里加上包名就ok 他会自动转到源文件所在的文件夹
         // "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt"
     },
     // "java.home": "C:\\Program Files\\Java\\jdk-12.0.1\\",
     "java.errors.incompleteClasspath.severity": "error",
     // "terminal.integrated.shell.windows": "powershell.exe",  //1.当显示不是有效语句分割符的解决办法之一 2.另外一个是改成";"
+    // "terminal.integrated.shell.windows":"C:\\Program Files\\Git\\git-bash.exe"
 }
